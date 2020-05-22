@@ -1,0 +1,72 @@
+baseURL = "localhost:1313"
+languageCode = "en-us"
+title = "Asad Raza"
+theme = "hugo-ink"
+
+publishDir = "docs"
+
+paginate = 5
+
+copyright = "© Copyright notice"
+
+pygmentsstyle = "vs"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+googleAnalytics = "UA-123-45"
+disqusShortname = "ink-demo"
+
+[params]
+	subtitle = "Single ready to mingle"
+
+	# Optional 64x64 avatar image.
+	avatar = "/images/pp.jpg"
+
+	# Content types to disable Disqus on.
+	disableDisqusTypes = ["page"]
+
+	featherIconsCDN = true
+
+	mode = "auto" # "dark" or "auto"
+	# customCSS = "css/custom.css"  # Custom CSS applied to default styles.
+	# customDarkCSS = "css/custom-dark.css"  # Custom styles applied to dark mode css.
+	# customJS = ["js/custom.js", "js/custom1.js"]  # Custom JS scripts.
+
+# Nav.
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "All posts"
+url = "/posts"
+weight = 2
+
+[[menu.main]]
+name = "About"
+url = "/about"
+weight = 3
+
+# [[menu.main]]
+# name = "Tags"
+# url = "/tags"
+# weight = 4
+
+[[params.social]]
+name = "Github"
+icon = "github"
+url = "https://github.com/araza6"
+
+[[params.social]]
+name = "Twitter"
+icon = "twitter"
+url = "https://twitter.com/hermitian_asad"
+
+[[params.social]]
+name = "Linkedin"
+icon = "linkedin"
+url = "https://www.linkedin.com/in/asad-razaa/"
+
+[taxonomies]
+   tag = "tags"

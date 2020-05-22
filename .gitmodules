@@ -1,0 +1,4 @@
+[submodule "public"]
+	path = public
+	url = https://github.com/araza6/araza6.github.io.git
+	branch = master
