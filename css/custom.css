@@ -1,0 +1,4 @@
+.header .site-description {
+    display: flex;
+    justify-content: space-between !important;
+}
