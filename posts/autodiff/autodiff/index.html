@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Introduction to Autodifferentiation in Machine Learning - Asad Raza</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta itemprop="name" content="Introduction to Autodifferentiation in Machine Learning">
+<meta itemprop="description" content="Autodiff: Theory and applications in machine learning">
+<meta itemprop="datePublished" content="2020-06-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-05T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1734">
+
+
+
+<meta itemprop="keywords" content="gsoc,machine-learning,physics," /><meta property="og:title" content="Introduction to Autodifferentiation in Machine Learning" />
+<meta property="og:description" content="Autodiff: Theory and applications in machine learning" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://araza6.github.io/posts/autodiff/autodiff/" />
+<meta property="article:published_time" content="2020-06-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Introduction to Autodifferentiation in Machine Learning"/>
+<meta name="twitter:description" content="Autodiff: Theory and applications in machine learning"/>
+<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="screen" href="https://araza6.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://araza6.github.io/css/main.css" />
+		
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+
+	
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.js" integrity="sha384-483A6DwYfKeDa0Q52fJmxFXkcPCFfnXMoXblOkJ4JcA8zATN6Tm78UNL72AKk+0O" crossorigin="anonymous"></script>
+
+
+
+		<link rel="stylesheet" type="text/css" href="https://araza6.github.io/css/custom.css" />
+	
+
+        <link id="dark-scheme" rel="stylesheet" type="text/css" href="https://araza6.github.io/css/dark.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+		<script src="https://araza6.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	
+		<div class="avatar">
+			<a href="https://araza6.github.io/">
+				<img src="/images/pp.jpg" alt="Asad Raza" />
+			</a>
+		</div>
+	
+	<h1 class="site-title"><a href="https://araza6.github.io/">Asad Raza</a></h1>
+	<div class="site-description"><p>Quantum Information &amp; Machine Learning</p><nav class="nav social">
+			<ul class="flat"><li><a href="https://github.com/araza6" title="Github"><i data-feather="github"></i></a></li><li><a href="https://twitter.com/hermitian_asad" title="Twitter"><i data-feather="twitter"></i></a></li><li><a href="https://www.linkedin.com/in/asad-razaa/" title="Linkedin"><i data-feather="linkedin"></i></a></li></ul>
+		</nav><span class="scheme-toggle"><a href="#" id="scheme-toggle"></a></div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">Home</a>
+			</li>
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post">
+			<div class="post-header">
+				
+					<div class="meta">
+						<div class="date">
+							<span class="day">05</span>
+							<span class="rest">Jun 2020</span>
+						</div>
+					</div>
+				
+				<div class="matter">
+					<h1 class="title">Introduction to Autodifferentiation in Machine Learning</h1>
+				</div>
+			</div>
+					
+			<div class="markdown">
+				<p><strong>Disclaimer</strong>: This blog essentialy summarizes this amazing review paper: <a href="https://arxiv.org/abs/1502.05767">Automatic Differentiation
+in Machine Learning: a Survey</a>. All the tables and (fancy) images in the blog are taken from the paper. Invested readers should check out the full paper (linked).</p>
+<p>Autodiff (short for Autodifferentiation) is extensively used in modern machine learning tasks. Libraries like <a href="https://www.tensorflow.org/guide/autodiff">Tensorflow</a>, <a href="https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html">Pytorch</a>, <a href="https://jax.readthedocs.io/en/latest/notebooks/quickstart.html">JAX</a> and several others have made it easier to calculate the derivatives of arbitrary functions. In this blog, I will be going through the theory behind autodiff, explain what autodiff is NOT, and finally chain it up to machine learning (with a small code-snippet too).</p>
+<p>Although I just promised to link machine learning later, the following example serves as a good motivation to start out with autodiff. Suppose that we want to perform backpropagation on a neural network that looks like this. <img src="/images/Autodiff_blog/backprop.png" alt="backprop!"></p>
+<p>Now, in order to do backprop, we need to take derivatives with respect to every weight in the network. In the worst case, for fully connected networks, this scales at least with the number of connections in the network. This, at first, seems like a daunting task since we have to take as much derivatives as there are connections in our network, and that too with respect to different parameters. Here is where the motivation for autograd comes in. We can calculate the derivatives with respect to <em>all</em> the weight parameters in just one backward pass. We shall do an example later in the blog to see for ourselves.</p>
+<p>To further motivate the idea of autodiff, we shall see what are the shortcomings of some other derivative techniques, and how autodiff chimes in with a better solution.</p>
+<h2 id="derivatives-by-finite-differences">Derivatives by Finite Differences</h2>
+<p>A widely used technique for <em>approximating</em> the derivatives is the finite differences method. One can understand this technique from the first principles. What is the <em>small</em> change in my function, $f$, corresponding to a <em>small</em> change in the value of the function parameter ($x$ in this case). For a single valued function, the so-called forward difference method</p>
+<p><img src="/images/Autodiff_blog/forward_difference.png" alt="fwd-diff!"></p>
+<p>approximates the derivative with a truncation term <img src="/images/Autodiff_blog/trunc-fwd-diff.png" alt="trunc-fwd-diff!"></p>
+<p>The derivates can be better approximated, with $\tau_{i} = O(h^2)$, using the centered-difference approximation, but again that would only be an approximation. Secondly, if you are familiar with Numerical Analysis, you must know that with numerical methods like these, we are faced with issues of consistency, convergence, and stability of the numerical solution. For our purposes, however, it should suffice to keep in mind that these methods only approximate the derivative. Ideally, we would want the exact derivative &ndash; and autodiff gives us just that!</p>
+<h2 id="symbolic-differentiation">Symbolic Differentiation</h2>
+<p>Another technique that is employed by sotwares like MATLAB and Mathematica is called symbolic differentiation. Good thing about symbolic differentiation is that it gives exact derivatives. However, it has its fallings. Firstly, for non-elementary functions, it might need the derivative to be hand-calculated. Even worse, when your functions become incresingly complex, a phenomenon called <strong>expression swell</strong> occurs. Authors of the review <a href="https://arxiv.org/abs/1502.05767">paper</a> cite a very compelling example in the following table:</p>
+<p><img src="/images/Autodiff_blog/exp-swell.png" alt="exp-swell!"></p>
+<h2 id="divide-and-differentiate">Divide and Differentiate!</h2>
+<p>What autodiff does is to essentially deal with both the shortcomings of symbolic differentiation by using what I may call, a divide-and-differentiate strategy. As &lsquo;autodifferentiators&rsquo;, for any mathematical expression, we break it down into elementary operations whose derivatives are well-known (no more hand-calculating non-elementary derivatives), store those derivatives as intermediate variables (no more expression swell), and then use those derivatives in the chain rule to get the desired derivative. In order to better visualize the dependecies among these variables, it is a standard practice to make a computational graph of the function, $f(x_{1}, x_{2},&hellip;,{x_{n}})$. Let&rsquo;s consider a concrete example of a two-variable function here</p>
+<p><img src="/images/Autodiff_blog/comp-graph.png" alt="here!"></p>
+<p>The intermediate nodes in the computational graph above represent the intermediate variables that represent our elementary intermediate computation through the graph (fret not, you will see what operations these intermediate nodes represent in the forward mode example below). In order to take the desired functional derivative with respect to any of the function parameters, we would be needing to calculate the intermediate derivatives as well. Let&rsquo;s define,</p>
+<p><img src="/images/Autodiff_blog/dv.png" alt="dv!"></p>
+<h2 id="forward-mode-autodiff">Forward Mode Autodiff</h2>
+<p>The first exmple we shall consider is of something called forward mode autodiff. In forward mode autodiff, we start from the left-most node, and move forward along to the right-most node in the computational graph &ndash; a forward pass. This table from the survey paper succinctly summarizes what happens in <em>one</em> forward pass of forward mode autodiff.</p>
+<p><img src="/images/Autodiff_blog/fwd-mode-ad.png" alt="fwd-mode-autodiff!"></p>
+<p>Note that the initilizations in the first block of the derivative trace column above form a unit vector (if put together as a column vector). And that is not a coincidence. The variable with respect to which the derivative is being calculated is $1$ and others are $0$ in this initialization routine. The rest, as I said earlier, involves calculating elementary derivatives using the expressions in the left column and leveraging the chain rule to obtain the intermediate deriatives at each step. Finally, we get the derivative with respect to the first variable, $x_1$. For a multi-variable function involving n variavbles, we would need n forward passes. More generally, for functions</p>
+<p><img src="/images/Autodiff_blog/f-r-m.png" alt="func-r-m!"></p>
+<p>we just need one forward pass. However, in the worst case, where the function input resides in an $n-$dimensional input space,</p>
+<p><img src="/images/Autodiff_blog/f-n-1.png" alt="func-n-1!"></p>
+<p>we would need $n$ forward passes to calculate all the desired derivatives, that is with respect to each input parameter.</p>
+<h2 id="reverse-mode-autodiff">Reverse Mode Autodiff</h2>
+<p>With forward mode autodiff under our belt, one can naturally guess the second type of autodifferentiation: reverse mode autodiff. Unlike the forward mode, the derivatives are calculated in reverse, from the outputs to the inputs (right to left). But in order to go from the outputs back to the inputs, we need to reach the outputs beginning from the inputs to begin with (that was a bit of a mouthful, sorry). Now, this necessitates the forward pass on the graph to calculate just the forward primal trace (not the derivatives) like the left column in Table 2. And then we begin calculating the derivatives, starting from the outer-most node. A  bit more notation here. We represent the intermediate derivatives here by</p>
+<p><img src="/images/Autodiff_blog/v-bar.png" alt="v-bar!"></p>
+<p>In case of backprop, $y$ would be the error value as shown in the first figure. In fact, it would be helpful to keep backprop in mind while we solve the upcoming example for reverse mode autodiff. Making an analogy with backprop, suppose that we are interested in calculating the error derivative with respect to a particular weight. The minor difference in our case is that we are not dealing with network weights in our example. Well, there is no network to begin with. We have inputs instead. So, in our case, we desire to calculate the derivatives $\frac{\partial y}{\partial v_{-1}}$ and $\frac{\partial y}{\partial v_{0}}$ of the output node with respect to the input parameters, $v_{-1}$ and $v_{0}$. Now, to do that, we would need to employ chain rule. In order to, say, calculate $\frac{\partial y}{\partial v_{-1}}$, we would need to calculate</p>
+<p>$$\frac{\partial y}{\partial v_{-1}} = \frac{\partial y}{\partial v_{1}}\frac{\partial v_{1}}{\partial v_{-1}} + \frac{\partial y}{\partial v_{2}}\frac{\partial v_{2}}{\partial v_{-1}}$$</p>
+<p>since $v_{-1}$ is only directly connected to $v_{1}$ and $v_{2}$ in the computational graph. This Table from the survey paper, again, lucidly summarizes the calculations for reverse mode autodiff for the same example.</p>
+<p><img src="/images/Autodiff_blog/rev-mode-ad.png" alt="rev-ad!"></p>
+<p>Here is where the things get interesting. Note that both $\frac{\partial y}{\partial x_{1}}$ and $\frac{\partial y}{\partial x_{0}}$ are evaluated in the same reverse pass. This is an improvement over the forward mode autodiff, where we saw that in the worst case when $f : \mathbb{R^{n}} \rightarrow \mathbb{R} $, forward mode autodiff needed $n$ passes. However, for reverse mode autodiff, such a function shall only need $one$ pass (but at the cost of increased storage requirements of all the intermediate variables). Since many machine learning tasks, like the training of deep nerual networks, involve calculating the derivatives of the cost function that depends on plethora of parameters (feature space),  with respect to the weights in a network, reverse mode autodiff naturally arises to be the winner for such machine learning tasks. We can even say that backprop is just a special case of reverse mode autodiff applied to the network&rsquo;s cost function.</p>
+<p>Actually, that is what Pytorch does for you under the hood. It makes something called a dynamic computational graph, where the user defines a model and the computational graph is constructed with the forward computation. On the other hand, static computational graphs like those in Theano, are constructed based off of the model <em>before</em> execution. The graph remains fixed, hence static, while different data values are are plugged in. Note that the terms static and dynamic refer to the graph topology and not to the data flow architectures.</p>
+<p>Before moving to the implementation section, I must say that in order to efficiently implement (forawrd or reverse) autodiff capabilities, one needs to work with Jacobian matrices. I have intentionally kept myself from introducing those in the blog because the focus here is not really how to implement, but rather to understand what autodiff fundamentally is. In fact, the stride to Jacobians (at the start) is not too big. For example, we calculate one column of a Jacobian matrix in one forward pass for forward mode autodiff. Okay, without further ado, let&rsquo;s move on to the implementation.</p>
+<h2 id="implementation">Implementation</h2>
+<p>This quote is overused in tech blogs to the point that it almost seems banal. But let me just use it one more time (pls?)</p>
+<blockquote>
+<p>Talk is cheap. Show me the code.</p>
+<p>&ndash; Linus Torvalds</p>
+</blockquote>
+<p>Since the core developers of the famed <a href="https://github.com/HIPS/autograd">Autograd</a> library have now moved over to actively develop <a href="https://jax.readthedocs.io/en/latest/index.html">JAX</a> instead, we might as well just start with JAX.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00f">import</span> jax.numpy <span style="color:#00f">as</span> np
+<span style="color:#00f">from</span> jax <span style="color:#00f">import</span> grad
+
+<span style="color:#00f">def</span> f(x1,x2):
+    <span style="color:#a31515">&#34;&#34;&#34;Returns the value of the function used in previous examples&#34;&#34;&#34;</span>
+    <span style="color:#00f">return</span> np.log(x1) + x1*x2 - np.sin(x2)
+
+<span style="color:#008000">#grad returns the gradient vector </span>
+grad_f1 =  grad(f, argnums=0) <span style="color:#008000">#derivative wrt x1</span>
+grad_f2 =  grad(f, argnums=1) <span style="color:#008000">#derivative wrt x2</span>
+
+<span style="color:#00f">print</span>(grad_f1(2.0,5.0))
+<span style="color:#008000"># 5.5</span>
+
+<span style="color:#00f">print</span>(grad_f2((2.0,5.0))
+<span style="color:#008000"># 1.7163378</span>
+
+<span style="color:#00f">print</span>(grad(grad(f))(2.0,5.0)) <span style="color:#008000">#second order derivative wrt x1</span>
+<span style="color:#008000"># -0.25</span>
+</code></pre></div><p>Verified! Our calculated values $5.5$ and $1.716$ (Table 3) of $\frac{\partial y}{\partial x_{1}}$ and $\frac{\partial y}{\partial x_{0}}$ respectively reconcile with what JAX gives us.</p>
+<p>Autodiff has been around since the 1970s, but the machine learning community somehow did not take note. I should say that Autodiff and machine learning communities were two <em>separate</em> fields of research until recently (and still are). Both fields, however, have gained from one another, and there&rsquo;s still a long way to go.</p>
+
+			</div>
+
+			<div class="tags">
+				
+					
+						<ul class="flat">
+							
+							<li><a href="/tags/gsoc">gsoc</a></li>
+							
+							<li><a href="/tags/machine-learning">machine-learning</a></li>
+							
+							<li><a href="/tags/physics">physics</a></li>
+							
+						</ul>
+					
+				
+			</div><div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'araza6';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the </a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div>2020  © Copyright notice |  <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on <a href="https://gohugo.io">Hugo</a></div>
+    </nav>
+    
+
+        <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+        tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [['$$','$$']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+        }
+        });
+        MathJax.Hub.Queue(function() {
+        
+        
+        
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i = 0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+        });
+
+        MathJax.Hub.Config({
+        
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+        });
+        </script>
+    
+</div>
+
+<script>feather.replace()</script>
+</body>
+</html>

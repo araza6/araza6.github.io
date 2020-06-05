@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 22 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://araza6.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introduction to Autodifferentiation in Machine Learning</title>
+      <link>https://araza6.github.io/posts/autodiff/autodiff/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/posts/autodiff/autodiff/</guid>
+      <description>Disclaimer: This blog essentialy summarizes this amazing review paper: Automatic Differentiation in Machine Learning: a Survey. All the tables and (fancy) images in the blog are taken from the paper. Invested readers should check out the full paper (linked).
+Autodiff (short for Autodifferentiation) is extensively used in modern machine learning tasks. Libraries like Tensorflow, Pytorch, JAX and several others have made it easier to calculate the derivatives of arbitrary functions. In this blog, I will be going through the theory behind autodiff, explain what autodiff is NOT, and finally chain it up to machine learning (with a small code-snippet too).</description>
+    </item>
     
     <item>
       <title>First Blog Post: GSoC 2020</title>
