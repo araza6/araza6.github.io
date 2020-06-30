@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-167453939-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<title>Interfacing JAX with QuTiP - Asad Raza</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta itemprop="name" content="Interfacing JAX with QuTiP">
+<meta itemprop="description" content="Issues with interfacing JAX with QuTiP and alternate routes to make QuTiP autodifferentiable">
+<meta itemprop="datePublished" content="2020-06-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="869">
+
+
+
+<meta itemprop="keywords" content="gsoc,code,physics," /><meta property="og:title" content="Interfacing JAX with QuTiP" />
+<meta property="og:description" content="Issues with interfacing JAX with QuTiP and alternate routes to make QuTiP autodifferentiable" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://araza6.github.io/posts/qobj-jax-interface/" />
+<meta property="article:published_time" content="2020-06-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-30T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Interfacing JAX with QuTiP"/>
+<meta name="twitter:description" content="Issues with interfacing JAX with QuTiP and alternate routes to make QuTiP autodifferentiable"/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-167453939-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+	<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="screen" href="https://araza6.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://araza6.github.io/css/main.css" />
+		
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+
+	
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.js" integrity="sha384-483A6DwYfKeDa0Q52fJmxFXkcPCFfnXMoXblOkJ4JcA8zATN6Tm78UNL72AKk+0O" crossorigin="anonymous"></script>
+
+
+
+		<link rel="stylesheet" type="text/css" href="https://araza6.github.io/css/custom.css" />
+	
+
+        <link id="dark-scheme" rel="stylesheet" type="text/css" href="https://araza6.github.io/css/dark.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+		<script src="https://araza6.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	
+		<div class="avatar">
+			<a href="https://araza6.github.io/">
+				<img src="/images/pp.jpg" alt="Asad Raza" />
+			</a>
+		</div>
+	
+	<h1 class="site-title"><a href="https://araza6.github.io/">Asad Raza</a></h1>
+	<div class="site-description"><p>&lt; Quantum Information | Machine Learning &gt;</p><nav class="nav social">
+			<ul class="flat"><li><a href="https://github.com/araza6" title="Github"><i data-feather="github"></i></a></li><li><a href="https://twitter.com/hermitian_asad" title="Twitter"><i data-feather="twitter"></i></a></li><li><a href="https://www.linkedin.com/in/asad-razaa/" title="Linkedin"><i data-feather="linkedin"></i></a></li></ul>
+		</nav><span class="scheme-toggle"><a href="#" id="scheme-toggle"></a></div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">Home</a>
+			</li>
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post">
+			<div class="post-header">
+				
+					<div class="meta">
+						<div class="date">
+							<span class="day">30</span>
+							<span class="rest">Jun 2020</span>
+						</div>
+					</div>
+				
+				<div class="matter">
+					<h1 class="title">Interfacing JAX with QuTiP</h1>
+				</div>
+			</div>
+					
+			<div class="markdown">
+				<p>As the month of June comes to an end, so does the first phase of Google Summer of Code (GSoC) 2020. In my previous <a href="https://araza6.github.io/posts/autodiff/autodiff/">post</a>, I attempted to cover the theory behind auto-differentiation, but did not fully explain how am I going to use autodiff for my GSoC project. Here, I am going to discuss just that. I will explain what problems did I face to make QuTiP work with <a href="https://jax.readthedocs.io/en/latest/index.html">JAX</a>, the famed auto-differentitation library, and what route did I take to solve the problem.</p>
+<p>The project started with a goal to <em>fully</em> interface JAX with QuTiP. By that I mean the following. To be able to differentiate any QuTiP method that returns a scalar output &ndash;  becuase JAX&rsquo;s <a href="https://jax.readthedocs.io/en/latest/jax.html#jax.grad"><code>grad</code></a> only autodifferentiates methods that have a scalar return value. An example of this workflow would be the following:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00f">from</span> qutip <span style="color:#00f">import</span> basis, fidelity 
+<span style="color:#00f">from</span> jax <span style="color:#00f">import</span> grad
+
+grad(fidelity)(basis(2, 0), basis(2, 1))
+
+</code></pre></div><p>This is a very smooth workflow for the user who wants to take gradients of QuTiP functions. One case where the user would want to take gradients, of say the <code>fidelity</code> function I have used in the snippet above is when <code>fidelity</code> is used as a cost function in some (quantum) machine learning routine.</p>
+<p>However this QuTiP-JAX integration is not that easy. The above snippet throws a Type Error</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Qobj data =
+[[1.]
+ [0.]]&#39; of type &lt;class &#39;qutip.qobj.Qobj&#39;&gt; is not a valid JAX type
+</code></pre></div><p>This is because JAX&rsquo;s <code>grad</code> (by default) only works with functions that accept arrays, scalars, or standard Python containers, whereas <code>fidelity</code> in our example accepts <code>Qobj</code> (see <a href="http://qutip.org/docs/4.0.2/modules/qutip/metrics.html#fidelity">docs</a>) as input kets or density matrices (whose fidelity one wishes to calculate). One might try converting QuTiP&rsquo;s <code>Qobj</code>, using the <code>full</code> method in QuTiP, to a standard numpy array before passing it into JAX&rsquo;s <code>grad</code>. Something like:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000"># assuming the same imports as above</span>
+<span style="color:#00f">import</span> jax.numpy <span style="color:#00f">as</span> jnp
+
+<span style="color:#008000">#Converting to JAX-aware numpy arrays</span>
+ket1 = jnp.asarray(basis(2,0).full()) 
+ket2 jnp.asarray(basis(2,0).full())
+
+grad(fidelity)(ket1, ket2)
+</code></pre></div><p>This still would not work since <code>grad(fidelity)</code> returns the <code>Callable</code> that accepts exactly the same arguments as the original function. The original <code>fidelity</code> function in QuTiP does not accept numpy array; it accepts <code>Qobj</code> class object. Here&rsquo;s the bottleneck: passing on a numpy array to <code>grad</code> shall be fine with JAX, but not with QuTiP; passing <code>Qobj</code> is fine with QuTiP but not with JAX.</p>
+<p>When JAX was being developed as Autograd, <code>autograd.extend</code> was something that could have been of use in our case. In JAX, there does not seem to be any similar option available, or at least it is not well documented. There are some related issues, <a href="https://github.com/google/jax/issues/446">here</a> and <a href="https://github.com/google/jax/issues/1251">here</a>, but I could not extract enough insights from these issues alone to be able to make QuTiP work seamlessly with JAX. I have a strong intuition that there is a way to make it work, perhaps by defining JAX <a href="https://jax.readthedocs.io/en/latest/notebooks/How_JAX_primitives_work.html">primitives</a> and/or <a href="https://github.com/google/jax/issues/1142">custom vjps</a>. But this exploration has already taxed me quite some time already. This project has a strict time-frame that pushes me to take an alternate route: Make a light version of QuTiP that is JAX-compatible. Now, how does that look like? This means re-writing all the basic QuTiP functions that our intended users may be needing to construct their Hamiltonians, take expectations, etc. For example, <code>fidelity</code> source code (which you don&rsquo;t need to understand fully) in QuTiP looks like</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#00f">def</span> fidelity(A, B):
+   <span style="color:#a31515">&#34;&#34;&#34;
+</span><span style="color:#a31515">   Calculates the fidelity (pseudo-metric) between two density matrices.
+</span><span style="color:#a31515">   See: Nielsen &amp; Chuang, &#34;Quantum Computation and Quantum Information&#34;
+</span><span style="color:#a31515">
+</span><span style="color:#a31515">   Parameters
+</span><span style="color:#a31515">   ----------
+</span><span style="color:#a31515">   A : qobj
+</span><span style="color:#a31515">       Density matrix or state vector.
+</span><span style="color:#a31515">   B : qobj
+</span><span style="color:#a31515">       Density matrix or state vector with same dimensions as A.
+</span><span style="color:#a31515">
+</span><span style="color:#a31515">   Returns
+</span><span style="color:#a31515">   -------
+</span><span style="color:#a31515">   fid : float
+</span><span style="color:#a31515">       Fidelity pseudo-metric between A and B.
+</span><span style="color:#a31515">
+</span><span style="color:#a31515">   &#34;&#34;&#34;</span>
+   <span style="color:#00f">if</span> A.isket <span style="color:#00f">or</span> A.isbra:
+       <span style="color:#008000"># Take advantage of the fact that the density operator for A</span>
+       <span style="color:#008000"># is a projector to avoid a sqrtm call.</span>
+       sqrtmA = ket2dm(A)
+       <span style="color:#008000"># Check whether we have to turn B into a density operator, too.</span>
+       <span style="color:#00f">if</span> B.isket <span style="color:#00f">or</span> B.isbra:
+           B = ket2dm(B)
+   <span style="color:#00f">else</span>:
+       <span style="color:#00f">if</span> B.isket <span style="color:#00f">or</span> B.isbra:
+           
+           <span style="color:#00f">return</span> fidelity(B, A)
+      
+       sqrtmA = A.sqrtm()
+
+   <span style="color:#00f">if</span> sqrtmA.dims != B.dims:
+       <span style="color:#00f">raise</span> TypeError(<span style="color:#a31515">&#39;Density matrices do not have same dimensions.&#39;</span>)
+
+   eig_vals = (sqrtmA * B * sqrtmA).eigenenergies()
+   <span style="color:#00f">return</span> float(np.real(np.sqrt(eig_vals[eig_vals &gt; 0]).sum()))
+
+</code></pre></div><p>while, the <code>fidelity</code> function (for kets only) in <code>qgrad.qutip</code> looks like</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00f">def</span> fidelity(a, b):
+   <span style="color:#a31515">&#34;&#34;&#34;
+</span><span style="color:#a31515">   Computes fidelity between two kets.
+</span><span style="color:#a31515">   
+</span><span style="color:#a31515">   Args:
+</span><span style="color:#a31515">       a (`:obj:numpy.array`): State vector (ket)
+</span><span style="color:#a31515">       b (`:obj:numpy.array`): State vector (ket)
+</span><span style="color:#a31515">       
+</span><span style="color:#a31515">   Returns:
+</span><span style="color:#a31515">       float: fidelity between the two state vectors
+</span><span style="color:#a31515">   &#34;&#34;&#34;</span>
+   <span style="color:#00f">return</span> jnp.abs(jnp.dot(jnp.transpose(jnp.conjugate(a)), b)) ** 2
+</code></pre></div><p>Here we completely get rid of <code>Qobj</code> constraint, which by the way is a great feature in QuTiP but became a pain for <code>qgrad</code> interfacing. Other similar operators like the Paulis, displacement and squeeze operators, etc are added, so that one can now work with QuTiP functions and also differentiate them, where appropriate.</p>
+<h1 id="future-work">Future Work</h1>
+<p>Having a light version of QuTiP avaialble through <code>qgrad.qutip</code>, we are ready to start applying it to exciting areas. I will now be working to make tutorials reconstructing <a href="https://arxiv.org/abs/2001.11897">this</a> unitary learning paper and this <a href="https://arxiv.org/abs/2004.14256">cavity control</a> paper. On the side, I shall be exploring ways to accomplish the ideal goal to fully interface JAX with QuTiP. In case that does not work, we would still have a version to let the users play with <code>qgrad</code>.</p>
+
+			</div>
+
+			<div class="tags">
+				
+					
+						<ul class="flat">
+							
+							<li><a href="/tags/gsoc">gsoc</a></li>
+							
+							<li><a href="/tags/code">code</a></li>
+							
+							<li><a href="/tags/physics">physics</a></li>
+							
+						</ul>
+					
+				
+			</div>
+  <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-araza6-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+   
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'https-araza6-github-io';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+</div>
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div>2020  © Copyright notice |  <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on <a href="https://gohugo.io">Hugo</a></div>
+    </nav>
+    
+
+        <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+        tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [['$$','$$']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+        }
+        });
+        MathJax.Hub.Queue(function() {
+        
+        
+        
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i = 0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+        });
+
+        MathJax.Hub.Config({
+        
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+        });
+        </script>
+    
+</div><script>feather.replace()</script>
+</body>
+</html>

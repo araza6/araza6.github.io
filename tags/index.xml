@@ -7,17 +7,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://araza6.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>code</title>
+      <link>https://araza6.github.io/tags/code/</link>
+      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/tags/code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>gsoc</title>
       <link>https://araza6.github.io/tags/gsoc/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://araza6.github.io/tags/gsoc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>physics</title>
+      <link>https://araza6.github.io/tags/physics/</link>
+      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/tags/physics/</guid>
       <description></description>
     </item>
     
@@ -27,24 +45,6 @@
       <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://araza6.github.io/tags/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>physics</title>
-      <link>https://araza6.github.io/tags/physics/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/tags/physics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>code</title>
-      <link>https://araza6.github.io/tags/code/</link>
-      <pubDate>Fri, 22 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/tags/code/</guid>
       <description></description>
     </item>
     
