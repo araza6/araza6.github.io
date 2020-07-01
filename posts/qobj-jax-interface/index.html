@@ -197,7 +197,7 @@ grad(fidelity)(ket1, ket2)
    <span style="color:#00f">return</span> jnp.abs(jnp.dot(jnp.transpose(jnp.conjugate(a)), b)) ** 2
 </code></pre></div><p>Here we completely get rid of <code>Qobj</code> constraint, which by the way is a great feature in QuTiP but became a pain for <code>qgrad</code> interfacing. Other similar operators like the Paulis, displacement and squeeze operators, etc are added, so that one can now work with QuTiP functions and also differentiate them, where appropriate.</p>
 <h1 id="future-work">Future Work</h1>
-<p>Having a light version of QuTiP availble through <code>qgrad.qutip</code>, we are ready to start applying it to exciting areas. I will now be working to make tutorials reconstructing <a href="https://arxiv.org/abs/2001.11897">this</a> unitary learning paper and this <a href="https://arxiv.org/abs/2004.14256">cavity control</a> paper. On the side, I shall be exploring ways to accomplish the ideal goal to fully interface JAX with QuTiP. In case that does not work, we would still have a version to let the users play with <code>qgrad</code>.</p>
+<p>Having a light version of QuTiP available through <code>qgrad.qutip</code>, we are ready to start applying it to exciting areas. I will now be working to make tutorials reconstructing <a href="https://arxiv.org/abs/2001.11897">this</a> unitary learning paper and this <a href="https://arxiv.org/abs/2004.14256">cavity control</a> paper. On the side, I shall be exploring ways to accomplish the ideal goal to fully interface JAX with QuTiP. In case that does not work, we would still have a version to let the users play with <code>qgrad</code>.</p>
 
 			</div>
 
