@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 30 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://araza6.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Halfway through Google Summer of Code</title>
+      <link>https://araza6.github.io/posts/gsoc-halfway/</link>
+      <pubDate>Sun, 19 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/posts/gsoc-halfway/</guid>
+      <description>It is about mid-July, and I am midway through my internship with Google Summer of Code (GSoC). This post is intended to serve as a quick update on the progress of my ongoing project about autodifferentiation of functions involving quantum processes.
+In my last post, I highlighted how is it difficult to interface QuTiP with JAX. As a (temporary) solution, I highlighted towards the end of the post, that the way forward would be to make a light-weight, but JAX-compatible, QuTiP.</description>
+    </item>
     
     <item>
       <title>Interfacing JAX with QuTiP</title>
