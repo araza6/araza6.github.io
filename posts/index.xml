@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 19 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://araza6.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Differentiating exponentials of Hamiltonians</title>
+      <link>https://araza6.github.io/posts/hamiltonian-differentiation/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/posts/hamiltonian-differentiation/</guid>
+      <description>Let me start by claiming that quantum machine learning is basically unitary learning. Take circuit learning for example. We start with an initial state, which is almost always $| 0 \rangle$, apply a bunch of gates in each layer and continue to do so based on how much is our appetite for decoherence goes. Then we knot qubits up with some entanglement and finally measure on some or all qubits with respect to an operator.</description>
+    </item>
     
     <item>
       <title>Halfway through Google Summer of Code</title>
