@@ -21,7 +21,7 @@ if (!doNotTrack) {
 <meta itemprop="description" content="JAX&#39;s inability to differentiate exponentials of quantum hamiltonians and ways around it">
 <meta itemprop="datePublished" content="2020-07-27T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-07-27T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1395">
+<meta itemprop="wordCount" content="1408">
 
 
 
@@ -143,7 +143,7 @@ $$</p>
 \frac{\partial U(\vec{t}, \vec{\tau})}{\partial t_{k}} = e^{-iB\tau_{N}}e^{-iAt_{N}} &hellip; e^{-iB\tau_{k}}(-iA)e^{-iAt_{k}} &hellip; e^{-iB\tau_{1}}e^{-iAt_{1}}
 \end{equation}
 $$</p>
-<p>(and similarly for $\frac{\partial U(\vec{t}, \vec{\tau})}{\partial \tau_{k}}$), it would be nice to be able to autodifferentiate these functions while doing numerical experiments. There are several different parameterizations and writing the code to calculate the derivative each time you change the parametrization scheme can be arduous.</p>
+<p>(and similarly for $\frac{\partial U(\vec{t}, \vec{\tau})}{\partial \tau_{k}}$), it would be nice to be able to <a href="https://araza6.github.io/posts/autodiff/autodiff/">autodifferentiate</a> these functions while doing numerical experiments. There are several different parameterizations and writing the code to calculate the derivative each time you change the parametrization scheme can be arduous.</p>
 <p>If you have been reading my blog, you might know that my <a href="https://araza6.github.io/posts/welcome-gsoc/">GSoC project</a> involves using JAX to bring autodiff capabilities to quantum routines, so you know now where this is going. If we try to take such derivatives using JAX, it complains. JAX does not support the autodifferentiation (actually, <a href="https://github.com/google/jax/pull/2062">it does support forward diff now</a>, but <a href="https://github.com/google/jax/issues/3447">backward diff is still a work in progress</a>) of functions that have a matrix as a power of the exponential function. If you write something as simple as</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00f">import</span> jax.numpy <span style="color:#00f">as</span> jnp
 
@@ -194,14 +194,16 @@ $$</p>
 b_{1} = \frac{\sqrt 3 |3\rangle + |9\rangle}{2}
 \end{equation}
 $$</p>
-<p>The visual below shows the learning trajectory:</p>
+<p>The visual below shows the learning trajectory along various
+points during the learning routine, where each row represents
+the Hinton and Wigner plots at almost equally separted times
+during the learning schedule, starting from the first row (vacuum state):</p>
 <p><img src="/images/Hamiltonian_Differentiation/learning-evo.png" alt="learning-evo!"></p>
 <p>We see that the last row above (apart from being beautiful) is very close to the target binomial state, $b_{1}$ below</p>
 <p><img src="/images/Hamiltonian_Differentiation/target-state.png" alt="target!"></p>
-<p>One can run a greater number of epochs (greater than $17$, which is what I used) for even better learning (that is to remove those little orange traces in the Hinton plot). But you get the idea. Without <code>qgrad</code>, one would need to write custom functions for the number states, dagger operator, etc, and figure out the trick for the Displace operator (<em>without</em> the matrix exponential). <code>qgrad</code> brings all of this together packaged for the user. This is just the beginning. We are exploring what we can do with <code>qgrad</code>, and we are excited to see what you will do in about a month&rsquo;s time when we will release the first version of this package.</p>
+<p>One can run a greater number of epochs for even better learning (that is to remove those little orange traces in the Hinton plot). But you get the idea. Without <code>qgrad</code>, one would need to write custom functions for the number states, dagger operator, etc, and figure out the trick for the Displace operator (<em>without</em> the matrix exponential). <code>qgrad</code> brings all of this together packaged for the user. This is just the beginning. We are exploring what we can do with <code>qgrad</code>, and we are excited to see what you will do in about a month&rsquo;s time when we will release the first version of this package.</p>
 <p>As to why did I talk about unitary parameterizations? Well, the objective was to show what we <em>can&rsquo;t</em> do with JAX and how we can go about it (as we did with the Displace operator). The goal now is to is to construct arbitrary unitary matrices, following a scheme like \ref{no-exp-unitary-decomp} without matrix exponentials, much like what we did for Displace. By the way, if you know of other related unitary parameterizations that do not involve matrix exponentials, free to drop your suggestions in the comments below!</p>
-<p>Once I am done writing the autodifferentiable unitary parametrization, I shall make (hopefully a better organized) post about unitary learning, where I explain from ground-up, what unitary learning is, implement it <em>without</em> <code>qgrad</code>, and then implement it <em>with</em> qgrad to juxtapose how <code>qgrad</code> would emancipate you from the shackles of writing gradient functions of different parameterizations. Because in autodiff, we trust!</p>
-<p>\cite{unitr_imp}</p>
+<p>Once I am done writing the autodifferentiable unitary parametrization, I shall make (hopefully a better organized) post about unitary learning, where I explain from ground-up, what unitary learning is, implement it <em>without</em> <code>qgrad</code>, and then implement it <em>with</em> qgrad to juxtapose how <code>qgrad</code> would emancipate you from the shackles of writing gradient functions for cost functions involving expoentiating a hamiltonian. Because in autodiff, we trust!</p>
 <h1 id="references">References</h1>
 <ol>
 <li>
@@ -218,12 +220,6 @@ $$</p>
 <p>Thomas Fösel, Stefan Krastanov, Florian Marquardt, Liang Jiang. <em>Efficient cavity control with SNAP gates</em>. <a href="https://arxiv.org/abs/2004.14256">https://arxiv.org/abs/2004.14256</a> (2020).</p>
 </li>
 </ol>
-<p>\begin{thebibliography}{}</p>
-<p>\bibitem{unitr_imp}
-Seth Lloyd and Reevu Maity.
-\textit{Efficient implementation of unitary transformations}
-\texttt{https://arxiv.org/abs/1901.03431}</p>
-<p>\end{thebibliography}</p>
 
 			</div>
 
