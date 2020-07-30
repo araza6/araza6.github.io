@@ -21,7 +21,7 @@ if (!doNotTrack) {
 <meta itemprop="description" content="JAX&#39;s inability to differentiate exponentials of quantum hamiltonians and ways around it">
 <meta itemprop="datePublished" content="2020-07-27T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-07-27T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1375">
+<meta itemprop="wordCount" content="1376">
 
 
 
@@ -123,7 +123,7 @@ if (!doNotTrack) {
 			<div class="markdown">
 				<p>Let me start by claiming that quantum machine learning is basically unitary learning. Take circuit learning for example. We start with an initial state, which is almost always $| 0 \rangle$, apply a bunch of gates in each layer and continue to do so based on how much is our appetite for decoherence goes. Then we knot qubits up with some entanglement and finally measure on some or all qubits with respect to an operator. We tune our gates until the rotation angles are just right to give us a close enough prediction compared to a fixed target state. The task here is to tune the angles of the parametrized gates just right to achieve the desired prediction. Now, each gate is essentially a unitary matrix. The circuit, which is nothing but a gigantic unitary genereated by tensoring each of these gates togther, is a huge unitary matrix that depends is to be tuned with just the right parameters. Shall we call this unitary learning?</p>
 <p>To establish the idea somewhat formally, we can define unitary learning as the task of learning an optimal paramter vector $\vec{\theta}_{opt}$ that parametrizes $U(\vec{\theta})$ such that $U(\vec{\theta})$ is close enough to some target unitary, $U$.</p>
-<p>A natural question now is that what does $U(\vec{\theta})$ look like? Any parametrization that satisfies $U U^{\dagger} = I$ works. Commonly, parameterizations have an exponential term raised to some matrix (hamiltonian). For example, in <a href="https://arxiv.org/abs/1806.10448">Kwok Ho Wan et al.</a> (2018) authors use the following parametrization where the Paulis are raised in the exponential term</p>
+<p>A natural question now is that what does $U(\vec{\theta})$ look like? Any parametrization that satisfies $U U^{\dagger} = I$ works. Commonly, parameterizations have an exponential term raised to some matrix (hamiltonian). For example, in <a href="https://arxiv.org/abs/1806.10448">Kwok Ho Wan et al.</a> (2018) the authors use the following parametrization where the Paulis are raised in the exponential term</p>
 <p>$$
 \begin{equation}\label{unitary-decomp-oscar}
 U_{NNn} = \exp[i(\sum_{j_{1}&hellip;.j_{N} = 0,&hellip;,0}^{3&hellip;3} \alpha_{j_{1}&hellip;j_{N}} (\sigma_{j_{1}} \otimes &hellip; \otimes \sigma_{j_{N}})]
