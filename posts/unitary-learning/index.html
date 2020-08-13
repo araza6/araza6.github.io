@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-167453939-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<title>Learning unitary matrices - Asad Raza</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta itemprop="name" content="Learning unitary matrices">
+<meta itemprop="description" content="Introduction to unitary learning and implementing it in qgrad">
+<meta itemprop="datePublished" content="2020-08-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-08-13T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1261">
+
+
+
+<meta itemprop="keywords" content="gsoc,code,physics," />
+<meta property="og:title" content="Learning unitary matrices" />
+<meta property="og:description" content="Introduction to unitary learning and implementing it in qgrad" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://araza6.github.io/posts/unitary-learning/" />
+<meta property="article:published_time" content="2020-08-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-08-13T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Learning unitary matrices"/>
+<meta name="twitter:description" content="Introduction to unitary learning and implementing it in qgrad"/>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-167453939-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+	<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="screen" href="https://araza6.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://araza6.github.io/css/main.css" />
+		
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+
+	
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.js" integrity="sha384-483A6DwYfKeDa0Q52fJmxFXkcPCFfnXMoXblOkJ4JcA8zATN6Tm78UNL72AKk+0O" crossorigin="anonymous"></script>
+
+
+
+		<link rel="stylesheet" type="text/css" href="https://araza6.github.io/css/custom.css" />
+	
+
+        <link id="dark-scheme" rel="stylesheet" type="text/css" href="https://araza6.github.io/css/dark.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+		<script src="https://araza6.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	
+		<div class="avatar">
+			<a href="https://araza6.github.io/">
+				<img src="/images/pp.jpg" alt="Asad Raza" />
+			</a>
+		</div>
+	
+	<h1 class="site-title"><a href="https://araza6.github.io/">Asad Raza</a></h1>
+	<div class="site-description"><p>&lt; Quantum Information | Machine Learning &gt;</p><nav class="nav social">
+			<ul class="flat"><li><a href="https://github.com/araza6" title="Github"><i data-feather="github"></i></a></li><li><a href="https://twitter.com/hermitian_asad" title="Twitter"><i data-feather="twitter"></i></a></li><li><a href="https://www.linkedin.com/in/asad-razaa/" title="Linkedin"><i data-feather="linkedin"></i></a></li></ul>
+		</nav><span class="scheme-toggle"><a href="#" id="scheme-toggle"></a></div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">Home</a>
+			</li>
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post">
+			<div class="post-header">
+				
+					<div class="meta">
+						<div class="date">
+							<span class="day">13</span>
+							<span class="rest">Aug 2020</span>
+						</div>
+					</div>
+				
+				<div class="matter">
+					<h1 class="title">Learning unitary matrices</h1>
+				</div>
+			</div>
+					
+			<div class="markdown">
+				<h2 id="background">Background</h2>
+<p>If you may remember, I concluded my <a href="https://araza6.github.io/posts/hamiltonian-differentiation/">last post</a> with an outlook on learning unitary matrices with <a href="https://github.com/qgrad/qgrad">qgrad</a>. This post goes into the details of what unitary learning is and how one can implement unitary learning in <code>qgrad</code>.</p>
+<p>Unitary transformations are utterly important in quantum computing primarily because they preserve the norm of the vectors and thus keep the quantum states normalized. Quantum Machine Learning primarily intends to find a unitary transformation such that when a data vector, encoded as a quantum state, say $| \psi_{i} \rangle$, undergoes this transformation to give $U | \psi_{i} \rangle $, one can measure this state (in any particular basis depending on the problem) to evaluate the probability of an input vector belonging to a particular class in a classification task. Thus, efficient learning of unitary matrices is very useful in Quantum Machine Learning. Applications of learning unitaries are also widespread in the field of quantum control. Given its widespread applicability, we felt the need that <a href="https://github.com/qgrad/qgrad">qgrad</a> users should be able to perform unitary learning routines smoothly with the library.</p>
+<h2 id="what-is-unitary-learning">What is Unitary Learning?</h2>
+<p>Suppose that I have a matrix $U$, and I want to learn $U(\theta)$, such that the entries of both $U$ and $U(\theta)$ are very close to each other, up to an irrelevant global phase. For a general matrix (which might not be unitary), you would need to find a parametrized factorization such that you can tune the parameters to get every entry of $U(\theta)$ as close as possible to every entry of $U$, again up to an irrelevant global phase. Thankfully for unitary matrices, many such parameterizations exist, as I detailed in my previous blog. Typically, these parameterizations involve a hermitian matrix in the power of the exponential, which is currently not differentiable in JAX. Following is the summary of the problem:</p>
+<p><img src="/images/unitary-learning-blog/unitary-parameterization-problem.png" alt="unitary-diff!"></p>
+<h2 id="parametrized-unitaries-in-qgrad">Parametrized Unitaries in qgrad</h2>
+<p>For those of you who read my <a href="https://araza6.github.io/posts/hamiltonian-differentiation/">last blog</a> might recall that I was looking into different unitary parameterizations to select the one that would form <code>qgrad</code>'s backend for parameterized unitaries. Well, here it is. I implemented a scheme from <a href="https://arxiv.org/abs/1612.05231">Li Jing et al. (2017)</a>, where exponents only have real numbers in their powers &ndash; differentiable in JAX.
+On a side note, <a href="https://arxiv.org/abs/1612.05231">Li Jing et al. (2017)</a> is a very interesting paper that uses unitary matrices to avoid vanishing/exploding gradients in classical neural nets. One may call this &lsquo;quantum inspired&rsquo;, but this was before QNNs were a thing. Anyway, back to the parameterization. $N$- dimensional parameterized unitary is defined as follows:</p>
+<p>$$
+\begin{equation}\label{unitary-param}
+U_{N} = D\prod_{i=2}^{N}\prod_{j=1}^{i-1}R^{'}_{ij}
+\end{equation}
+$$</p>
+<p>where $D$ is a diagonal matrix, whose diagonal elements are
+$e^{i\omega_{j}}$ and $R_{ij}^{'}$ are rotation
+matrices where $R_{ij}$ is an $N$- dimensional identity matrix
+with the elements $R_{ii}, R_{ij}, R_{ji}$ and $R_{jj}$
+replaced as follows:</p>
+<p>$$
+\begin{equation}\label{rot-matrices}
+\begin{pmatrix} R_{ii} &amp; R_{ij} \\ R_{ji} &amp; R_{jj}
+\end{pmatrix} = \begin{pmatrix}
+e^{i\phi_{ij}}cos(\theta_{ij}) &amp;
+-e^{i\phi_{ij}}sin(\theta_{ij}) \\<br>
+sin(\theta_{ij}) &amp; cos(\theta_{ij})
+\end{pmatrix}
+\end{equation}
+$$</p>
+<p>where $R_{ij}^{'} = R(-\theta_{ij}, -\phi_{ij})$ and $\phi_{ij}$, $\theta_{ij}$ and $\omega_{j}$ parameters are all real, which is what we desired (for compatibility with JAX).</p>
+<h2 id="learning-unitaries-with-qgrad">Learning Unitaries with qgrad</h2>
+<p>Let us see how we can use <code>qgrad</code> to implement unitary learning routines. Here we will implement <a href="https://arxiv.org/abs/1901.03431">Seth Lloyd and Reevu Maity (2019)</a> and the companion paper <a href="https://arxiv.org/abs/2001.11897">Bobak et al</a>. In our implementation of these two papers with <code>qgrad</code>, we cheat a little bit, in that our unitary parameterization (\ref{unitary-param}) is different from that used by the authors</p>
+<p>$$
+\begin{equation}\label{decomp}
+U(\vec{t}, \vec{\tau}) = e^{-iB\tau_{N}}e^{-iAt_{N}} &hellip; e^{-iB\tau_{1}}e^{-iAt_{1}}
+\end{equation}
+$$</p>
+<p>where $\vec{t}$ and $\vec{\tau}$ are parameter vectors of size $N$ and matrices $A$ and $B$ are chosen from a Gaussian Unitary Ensemble (GUE).</p>
+<p>Fret not! You can see for yourself that parameterization (\ref{unitary-param}) implemented in <code>qgrad</code> has $\frac{N (N - 1)}{2}$ different $\theta_{ij}$ and $\phi_{ij}$ parameters and $N$ different
+$\omega_{j}$ parameters. Thus, the total number of parameters to approximate any unitary using this scheme scales as $O(N^2)$, where $N$ is the dimension of the unitary. The authors in <a href="https://arxiv.org/abs/1901.03431">Seth Lloyd and Reevu Maity (2019)</a> conclude that an efficient reconstruction of a unitary takes $O(N^2)$ parameters. So, we don&rsquo;t lose much with our new parametrization unless we want to reduce the number of parameters and end up with an inefficient reconstruction.</p>
+<p>Alright, so for a target unitary matrix, $U$, the goal is to find optimal parameter vectors for the parametrized unitary $U(\vec{\theta}, \vec{\phi}, \vec{\omega})$, such that $U(\vec{\theta}, \vec{\phi}, \vec{\omega})$ approximates $U$ as closely as possible.
+For the purposes of this example, we work with $8$-dimensional (3 qubit) unitary matrices.
+Our the input dataset consists of $8 \times 1$ kets, call them
+$| \psi_{i} \rangle$ and output dataset is the action of the
+target unitary $U$ on these kets, $U |\psi_{i} \rangle$. The
+maximum value of $i$, which is equal to $M$, is $80$, meaning that we merely use 80
+data points (kets in this case) to efficiently learn the target unitary, $U$. We use the same loss function as the authors of <a href="https://arxiv.org/abs/1901.03431">Seth Lloyd and Reevu Maity (2019)</a> use in the original paper</p>
+<p>$$
+\begin{equation} \label{err_ps}
+E = 1 - (\frac{1}{M})\sum_{i} \langle \psi_{i}|U^{\dagger} U(\vec{\theta}, \vec{\phi}, \vec{\omega})|\psi_{i}\rangle
+\end{equation}
+$$</p>
+<p>where $ |\psi_{i} \rangle$ are the training
+data points &ndash; in this case, kets, $U$ and
+$U(\vec{\theta}, \vec{\phi}, \vec{\omega})$ are the target and
+parameterized unitaries respectively, and $M$ is the total number of points
+in the dataset. In <code>qgrad</code>, this cost would look like</p>
+<p><img src="/images/unitary-learning-blog/cost-code.png" alt="cost-code!"></p>
+<p>where one can parameterize unitaries by importing a <code>Unitary</code> class and calling the class object by passing parameters to it as is done in line 17 above. This parametrization in qgrad lets you differentiate the cost function in just one line using JAX&rsquo;s <code>grad</code>. Speaking of learning, after a simple $40$  gradient descent steps, we match the input kets with the output kets with an average fidelity of $99.57 \%$.</p>
+<p><img src="/images/unitary-learning-blog/fidelity-trend.png" alt="fidel-trend!"></p>
+<h2 id="unitary-learning-without-qgrad">Unitary Learning without qgrad</h2>
+<p>I made a separate tutorial without <code>JAX</code> and <code>qgrad</code> to juxtapose the convenience with which <code>qgrad</code> lets you differentiate functions. Without autodiff, there are two ways out. First is to write your own analytic derivative routines which can be very simple to very complex, depending on the function itself. For our cost function \ref{err_ps}, the derivative w.r.t $\tau_{k}$ would look like</p>
+<p>$$
+\begin{equation}
+\frac{\partial}{\partial \tau_{k}}E(\vec{t},\vec{\tau}) = -\frac{1}{M}\sum_{i} \langle \psi_{i}|U^{\dagger}[e^{-iAt_{N}}e^{-iB\tau_{N}} &hellip; (-iB)e^{-iB\tau_{k}}e^{-iAt_{k}} &hellip; e^{-iB\tau_{1}}e^{-iAt_{1}}]|\psi_{i}\rangle
+\end{equation}
+$$</p>
+<p>and similarly for the derivatives w.r.t $t_k$. Now, coding this up for your numerical simulations can be arduous. But one might argue that we can go by approximating the derivatives, rather than obsessing about analytically calculating them. This brings me to the second alternative: derivatives using finite differences. Let&rsquo;s write a simple function to calculate derivatives for \ref{decomp} (which might change a bit for different cost functions, parameterizations, and the shape of the parameter arrays being passed)</p>
+<p><img src="/images/unitary-learning-blog/finite-diff.png" alt="finite-diff!"></p>
+<p>Well, in qgrad we can do just that, and that too analytically, in one line</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00f">from</span> jax <span style="color:#00f">import</span> grad
+grad(cost)(params, ket_input, ket_output)
+</code></pre></div><p>without worrying about what the analytic form of the derivative looks like and without needing to write a custom finite differences method.</p>
+<p>This hopefully shows how <code>qgrad</code> can be handy for optimization tasks that involve Hamiltonian learning. With qgrad, one can perform circuit learning as well! A notebook on Variational Quantum Algorithms is already in works. To track the project on GitHub, open issues or pull requests, please follow this [link])(<a href="https://github.com/qgrad/qgrad)">https://github.com/qgrad/qgrad)</a>.</p>
+<h2 id="references">References</h2>
+<ol>
+<li>
+<p>Jing, Li, et al. &ldquo;Tunable efficient unitary neural networks (eunn) and their application to rnns.&rdquo; International Conference on Machine Learning. 2017.</p>
+</li>
+<li>
+<p>Lloyd, Seth, and Reevu Maity. &ldquo;Efficient implementation of unitary transformations.&rdquo; arXiv preprint arXiv:1901.03431 (2019).</p>
+</li>
+<li>
+<p>Kiani, Bobak Toussi, Seth Lloyd, and Reevu Maity. &ldquo;Learning unitaries by gradient descent.&rdquo; arXiv preprint arXiv:2001.11897 (2020).</p>
+</li>
+</ol>
+
+			</div>
+
+			<div class="tags">
+				
+					
+						<ul class="flat">
+							
+							<li><a href="/tags/gsoc">gsoc</a></li>
+							
+							<li><a href="/tags/code">code</a></li>
+							
+							<li><a href="/tags/physics">physics</a></li>
+							
+						</ul>
+					
+				
+			</div>
+  <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-araza6-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+   
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'https-araza6-github-io';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+</div>
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div>2020  © Copyright notice |  <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on <a href="https://gohugo.io">Hugo</a></div>
+    </nav>
+    
+
+        <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+        tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [['$$','$$']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+        }
+        });
+        MathJax.Hub.Queue(function() {
+        
+        
+        
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i = 0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+        });
+
+        MathJax.Hub.Config({
+        
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+        });
+        </script>
+    
+</div><script>feather.replace()</script>
+</body>
+</html>
