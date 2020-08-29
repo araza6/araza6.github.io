@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://araza6.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>code</title>
       <link>https://araza6.github.io/tags/code/</link>
-      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://araza6.github.io/tags/code/</guid>
       <description></description>
@@ -24,7 +24,7 @@
     <item>
       <title>gsoc</title>
       <link>https://araza6.github.io/tags/gsoc/</link>
-      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://araza6.github.io/tags/gsoc/</guid>
       <description></description>
@@ -33,7 +33,7 @@
     <item>
       <title>physics</title>
       <link>https://araza6.github.io/tags/physics/</link>
-      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://araza6.github.io/tags/physics/</guid>
       <description></description>
@@ -42,9 +42,18 @@
     <item>
       <title>qgrad</title>
       <link>https://araza6.github.io/tags/qgrad/</link>
-      <pubDate>Sun, 19 Jul 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://araza6.github.io/tags/qgrad/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>physics. qgrad</title>
+      <link>https://araza6.github.io/tags/physics.-qgrad/</link>
+      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/tags/physics.-qgrad/</guid>
       <description></description>
     </item>
     

@@ -7,19 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://araza6.github.io/tags/physics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Learning unitary matrices</title>
-      <link>https://araza6.github.io/posts/unitary-learning/</link>
-      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      <title>qgrad: An autodifferentiation framework for quantum physics routines</title>
+      <link>https://araza6.github.io/posts/qgrad-summary/</link>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://araza6.github.io/posts/unitary-learning/</guid>
-      <description>Background If you may remember, I concluded my last post with an outlook on learning unitary matrices with qgrad. This post goes into the details of what unitary learning is and how one can implement unitary learning in qgrad.
-Unitary transformations are utterly important in quantum computing primarily because they preserve the norm of the vectors and thus keep the quantum states normalized. Quantum Machine Learning primarily intends to find a unitary transformation such that when a data vector, encoded as a quantum state, say $| \psi_{i} \rangle$, undergoes this transformation to give $U | \psi_{i} \rangle $, one can measure this state (in any particular basis depending on the problem) to evaluate the probability of an input vector belonging to a particular class in a classification task.</description>
+      <guid>https://araza6.github.io/posts/qgrad-summary/</guid>
+      <description>This is the last post in a series of posts I have been puttting up for my Google Summer of Code (GSoC) 2020 project. This post shall serve as a &amp;ldquo;Getting Started&amp;rdquo; guide to qgrad, in that it will walk you through all the major features of qgrad and how they can be possibly used. But before that, here are two quick links in case you want to take a nose-dive and explore yourself</description>
     </item>
     
     <item>
@@ -48,16 +47,6 @@ Unitary transformations are utterly important in quantum computing primarily bec
       <guid>https://araza6.github.io/posts/autodiff/autodiff/</guid>
       <description>Disclaimer: This blog essentially summarizes this amazing review paper: Automatic Differentiation in Machine Learning: a Survey. All the tables and (fancy) images in the blog are taken from the paper. Invested readers should check out the full paper (linked).
 Autodiff (short for Autodifferentiation) is extensively used in modern machine learning tasks. Libraries like Tensorflow, Pytorch, JAX and several others have made it easier to calculate the derivatives of arbitrary functions. In this blog, I will be going through the theory behind autodiff, explain what autodiff is NOT, and finally chain it up to machine learning (with a small code-snippet too).</description>
-    </item>
-    
-    <item>
-      <title>First Blog Post: GSoC 2020</title>
-      <link>https://araza6.github.io/posts/welcome-gsoc/</link>
-      <pubDate>Fri, 22 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/posts/welcome-gsoc/</guid>
-      <description>Hello,
-This is my first-ever blog post (as far as I remember really). I planned to start blogging in my freshman year, and it&amp;rsquo;s been almost three years since then. Planning fallacy, as Kahneman would say. Anyway, I should thank Google Summer of Code to finally make me do it (although technically so. Fret not, I will try to make these blogs as accessible as possible) as part of my upcoming summer project with NUMFOCUS&amp;rsquo;s QuTiP.</description>
     </item>
     
   </channel>

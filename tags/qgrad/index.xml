@@ -7,19 +7,36 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 19 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://araza6.github.io/tags/qgrad/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Halfway through Google Summer of Code</title>
-      <link>https://araza6.github.io/posts/gsoc-halfway/</link>
-      <pubDate>Sun, 19 Jul 2020 00:00:00 +0000</pubDate>
+      <title>qgrad: An autodifferentiation framework for quantum physics routines</title>
+      <link>https://araza6.github.io/posts/qgrad-summary/</link>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://araza6.github.io/posts/gsoc-halfway/</guid>
-      <description>It is about mid-July, and I am midway through my internship with Google Summer of Code (GSoC). This post is intended to serve as a quick update on the progress of my ongoing project about autodifferentiation of functions involving quantum processes.
-In my last post, I highlighted how is it difficult to interface QuTiP with JAX. As a (temporary) solution, I highlighted towards the end of the post, that the way forward would be to make a light-weight, but JAX-compatible, QuTiP.</description>
+      <guid>https://araza6.github.io/posts/qgrad-summary/</guid>
+      <description>This is the last post in a series of posts I have been puttting up for my Google Summer of Code (GSoC) 2020 project. This post shall serve as a &amp;ldquo;Getting Started&amp;rdquo; guide to qgrad, in that it will walk you through all the major features of qgrad and how they can be possibly used. But before that, here are two quick links in case you want to take a nose-dive and explore yourself</description>
+    </item>
+    
+    <item>
+      <title>Differentiating exponentials of Hamiltonians</title>
+      <link>https://araza6.github.io/posts/hamiltonian-differentiation/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/posts/hamiltonian-differentiation/</guid>
+      <description>Let me start by claiming that quantum machine learning is basically unitary learning. Take circuit learning for example. We start with an initial state, which is almost always $| 0 \rangle$, apply a bunch of gates in each layer and continue to do so based on how much is our appetite for decoherence goes. Then we knot qubits up with some entanglement and finally measure on some or all qubits with respect to an operator.</description>
+    </item>
+    
+    <item>
+      <title>Interfacing JAX with QuTiP</title>
+      <link>https://araza6.github.io/posts/qobj-jax-interface/</link>
+      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/posts/qobj-jax-interface/</guid>
+      <description>As the month of June comes to an end, so does the first phase of Google Summer of Code (GSoC) 2020. In my previous post, I attempted to cover the theory behind auto-differentiation, but did not fully explain how am I going to use autodiff for my GSoC project. Here, I am going to discuss just that. I will explain what problems did I face to make QuTiP work with JAX, the famed auto-differentitation library, and what route did I take to solve the problem.</description>
     </item>
     
   </channel>

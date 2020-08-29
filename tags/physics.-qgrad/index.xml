@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>physics. qgrad on Asad Raza</title>
+    <link>https://araza6.github.io/tags/physics.-qgrad/</link>
+    <description>Recent content in physics. qgrad on Asad Raza</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://araza6.github.io/tags/physics.-qgrad/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Learning unitary matrices</title>
+      <link>https://araza6.github.io/posts/unitary-learning/</link>
+      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/posts/unitary-learning/</guid>
+      <description>Background If you may remember, I concluded my last post with an outlook on learning unitary matrices with qgrad. This post goes into the details of what unitary learning is and how one can implement unitary learning in qgrad.
+Unitary transformations are utterly important in quantum computing primarily because they preserve the norm of the vectors and thus keep the quantum states normalized. Quantum Machine Learning primarily intends to find a unitary transformation such that when a data vector, encoded as a quantum state, say $| \psi_{i} \rangle$, undergoes this transformation to give $U | \psi_{i} \rangle $, one can measure this state (in any particular basis depending on the problem) to evaluate the probability of an input vector belonging to a particular class in a classification task.</description>
+    </item>
+    
+  </channel>
+</rss>

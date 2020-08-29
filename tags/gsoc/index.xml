@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://araza6.github.io/tags/gsoc/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>qgrad: An autodifferentiation framework for quantum physics routines</title>
+      <link>https://araza6.github.io/posts/qgrad-summary/</link>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://araza6.github.io/posts/qgrad-summary/</guid>
+      <description>This is the last post in a series of posts I have been puttting up for my Google Summer of Code (GSoC) 2020 project. This post shall serve as a &amp;ldquo;Getting Started&amp;rdquo; guide to qgrad, in that it will walk you through all the major features of qgrad and how they can be possibly used. But before that, here are two quick links in case you want to take a nose-dive and explore yourself</description>
+    </item>
     
     <item>
       <title>Learning unitary matrices</title>
