@@ -21,7 +21,7 @@ if (!doNotTrack) {
 <meta itemprop="description" content="Getting started with qgrad">
 <meta itemprop="datePublished" content="2020-08-29T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-08-29T00:00:00+00:00" />
-<meta itemprop="wordCount" content="772">
+<meta itemprop="wordCount" content="773">
 
 
 
@@ -135,7 +135,7 @@ You may have any quantum function whose
 derivative you might want to evaluate, you can construct your
 favorite quantum routine using the functions we provide as part of
 our <a href="https://qgrad.readthedocs.io/en/latest/api.html">API</a>.
-All the functions in our API are autdiff compatible, which is to
+All the functions in our API are autodiff compatible, which is to
 say that you can simply take gradients of your function</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00f">from</span> jax <span style="color:#00f">import</span> grad
 
@@ -173,7 +173,7 @@ thetas = params[:N * (N-1) // 2]
 phis = params[N * (N - 1) // 2 : N * (N - 1)]
 omegas = params[N * (N - 1):]
 unitary = Unitary(N)(thetas, phis, omegas)
-</code></pre></div><p>Full unitary learning tutorial
+</code></pre></div><p>The full unitary learning tutorial
 can be found <a href="https://qgrad.readthedocs.io/en/latest/Unitary-Learning-qgrad.html">here</a>,
 where starting from a randomly parametrized unitary, we learn the desired
 target unitary.
