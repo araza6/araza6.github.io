@@ -15,23 +15,18 @@ if (!doNotTrack) {
 	
 	ga('send', 'pageview');
 }
-</script>
-<title>Introduction to Autodifferentiation in Machine Learning - Asad Raza</title><meta name="viewport" content="width=device-width, initial-scale=1">
+</script><title>Introduction to Autodifferentiation in Machine Learning - Asad Raza</title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta itemprop="name" content="Introduction to Autodifferentiation in Machine Learning">
-<meta itemprop="description" content="The theory of autodifferentiation and its applications in machine learning">
-<meta itemprop="datePublished" content="2020-06-05T00:00:00+00:00" />
+<meta itemprop="description" content="The theory of autodifferentiation and its applications in machine learning"><meta itemprop="datePublished" content="2020-06-05T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-06-05T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1688">
-
-
-
-<meta itemprop="keywords" content="gsoc,machine-learning,physics," />
-<meta property="og:title" content="Introduction to Autodifferentiation in Machine Learning" />
+<meta itemprop="keywords" content="gsoc,machine-learning,physics," /><meta property="og:title" content="Introduction to Autodifferentiation in Machine Learning" />
 <meta property="og:description" content="The theory of autodifferentiation and its applications in machine learning" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://araza6.github.io/posts/autodiff/autodiff/" />
+<meta property="og:url" content="https://araza6.github.io/posts/autodiff/autodiff/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-06-05T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-06-05T00:00:00+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Introduction to Autodifferentiation in Machine Learning"/>
 <meta name="twitter:description" content="The theory of autodifferentiation and its applications in machine learning"/>
@@ -48,7 +43,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 
 	<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" media="screen" href="https://araza6.github.io/css/normalize.css" />
@@ -182,13 +176,13 @@ in Machine Learning: a Survey</a></p>
 grad_f1 =  grad(f, argnums=0) <span style="color:#008000">#derivative wrt x1</span>
 grad_f2 =  grad(f, argnums=1) <span style="color:#008000">#derivative wrt x2</span>
 
-<span style="color:#00f">print</span>(grad_f1(2.0,5.0))
+print(grad_f1(2.0,5.0))
 <span style="color:#008000"># 5.5</span>
 
-<span style="color:#00f">print</span>(grad_f2((2.0,5.0))
+print(grad_f2((2.0,5.0))
 <span style="color:#008000"># 1.7163378</span>
 
-<span style="color:#00f">print</span>(grad(grad(f))(2.0,5.0)) <span style="color:#008000">#second order derivative wrt x1</span>
+print(grad(grad(f))(2.0,5.0)) <span style="color:#008000">#second order derivative wrt x1</span>
 <span style="color:#008000"># -0.25</span>
 </code></pre></div><p>Verified! Our calculated values $5.5$ and $1.716$ (Table 3) of $\frac{\partial y}{\partial x_{1}}$ and $\frac{\partial y}{\partial x_{2}}$ respectively reconcile with what JAX gives us.</p>
 <p>Autodiff has been around since the 1970s, but the machine learning community somehow did not take note. I should say that Autodiff and machine learning communities were two <em>separate</em> fields of research until recently (and still are). Both fields, however, have gained from one another, and there&rsquo;s still a long way to go.</p>
