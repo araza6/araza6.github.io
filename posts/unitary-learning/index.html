@@ -26,7 +26,6 @@ if (!doNotTrack) {
 <meta property="og:url" content="https://araza6.github.io/posts/unitary-learning/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-08-13T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-08-13T00:00:00+00:00" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Learning unitary matrices"/>
 <meta name="twitter:description" content="Introduction to unitary learning and implementing it in qgrad"/>
@@ -122,11 +121,11 @@ if (!doNotTrack) {
 On a side note, <a href="https://arxiv.org/abs/1612.05231">Li Jing et al. (2017)</a> is a very interesting paper that uses unitary matrices to avoid vanishing/exploding gradients in classical neural nets. One may call this &lsquo;quantum inspired&rsquo;, but this was before QNNs were a thing. Anyway, back to the parameterization. $N$- dimensional parameterized unitary is defined as follows:</p>
 <p>$$
 \begin{equation}\label{unitary-param}
-U_{N} = D\prod_{i=2}^{N}\prod_{j=1}^{i-1}R^{'}_{ij}
+U_{N} = D\prod_{i=2}^{N}\prod_{j=1}^{i-1}R^{&rsquo;}_{ij}
 \end{equation}
 $$</p>
 <p>where $D$ is a diagonal matrix, whose diagonal elements are
-$e^{i\omega_{j}}$ and $R_{ij}^{'}$ are rotation
+$e^{i\omega_{j}}$ and $R_{ij}^{&rsquo;}$ are rotation
 matrices where $R_{ij}$ is an $N$- dimensional identity matrix
 with the elements $R_{ii}, R_{ij}, R_{ji}$ and $R_{jj}$
 replaced as follows:</p>
@@ -135,12 +134,12 @@ replaced as follows:</p>
 \begin{pmatrix} R_{ii} &amp; R_{ij} \\ R_{ji} &amp; R_{jj}
 \end{pmatrix} = \begin{pmatrix}
 e^{i\phi_{ij}}cos(\theta_{ij}) &amp;
--e^{i\phi_{ij}}sin(\theta_{ij}) \\<br>
+-e^{i\phi_{ij}}sin(\theta_{ij}) \\
 sin(\theta_{ij}) &amp; cos(\theta_{ij})
 \end{pmatrix}
 \end{equation}
 $$</p>
-<p>where $R_{ij}^{'} = R(-\theta_{ij}, -\phi_{ij})$ and $\phi_{ij}$, $\theta_{ij}$ and $\omega_{j}$ parameters are all real, which is what we desired (for compatibility with JAX).</p>
+<p>where $R_{ij}^{&rsquo;} = R(-\theta_{ij}, -\phi_{ij})$ and $\phi_{ij}$, $\theta_{ij}$ and $\omega_{j}$ parameters are all real, which is what we desired (for compatibility with JAX).</p>
 <h2 id="learning-unitaries-with-qgrad">Learning Unitaries with qgrad</h2>
 <p>Let us see how we can use <code>qgrad</code> to implement unitary learning routines. Here we will implement <a href="https://arxiv.org/abs/1901.03431">Seth Lloyd and Reevu Maity (2019)</a> and the companion paper <a href="https://arxiv.org/abs/2001.11897">Bobak et al</a>. In our implementation of these two papers with <code>qgrad</code>, we cheat a little bit, in that our unitary parameterization (\ref{unitary-param}) is different from that used by the authors</p>
 <p>$$
@@ -181,9 +180,9 @@ $$</p>
 <p>and similarly for the derivatives w.r.t $t_k$. Now, coding this up for your numerical simulations can be arduous. But one might argue that we can go by approximating the derivatives, rather than obsessing about analytically calculating them. This brings me to the second alternative: derivatives using finite differences. Let&rsquo;s write a simple function to calculate derivatives for \ref{decomp} (which might change a bit for different cost functions, parameterizations, and the shape of the parameter arrays being passed)</p>
 <p><img src="/images/unitary-learning-blog/finite-diff.png" alt="finite-diff!"></p>
 <p>Well, in qgrad we can do just that, and that too analytically, in one line</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00f">from</span> jax <span style="color:#00f">import</span> grad
-grad(cost)(params, ket_input, ket_output)
-</code></pre></div><p>without worrying about what the analytic form of the derivative looks like and without needing to write a custom finite differences method.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00f">from</span> jax <span style="color:#00f">import</span> grad
+</span></span><span style="display:flex;"><span>grad(cost)(params, ket_input, ket_output)
+</span></span></code></pre></div><p>without worrying about what the analytic form of the derivative looks like and without needing to write a custom finite differences method.</p>
 <p>This hopefully shows how <code>qgrad</code> can be handy for optimization tasks that involve Hamiltonian learning. With qgrad, one can perform circuit learning as well! A notebook on Variational Quantum Algorithms is already in works. To track the project on GitHub, open issues or pull requests, please follow this <a href="https://github.com/qgrad/qgrad">link</a>.</p>
 <h2 id="references">References</h2>
 <ol>
@@ -217,7 +216,7 @@ grad(cost)(params, ket_input, ket_output)
 			</div>
   <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
