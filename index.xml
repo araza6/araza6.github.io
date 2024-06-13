@@ -6,83 +6,16 @@
     <description>Recent content on Asad Raza</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 29 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://araza6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>© Copyright notice</copyright><atom:link href="https://araza6.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>qgrad: An autodifferentiation framework for quantum physics routines</title>
-      <link>https://araza6.github.io/posts/qgrad-summary/</link>
-      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/posts/qgrad-summary/</guid>
-      <description>This is the last post in a series of posts I have been puttting up for my Google Summer of Code (GSoC) 2020 project. This post shall serve as a &amp;ldquo;Getting Started&amp;rdquo; guide to qgrad, in that it will walk you through all the major features of qgrad and how they can be possibly used. But before that, here are two quick links in case you want to take a nose-dive and explore yourself</description>
-    </item>
-    
-    <item>
-      <title>Learning unitary matrices</title>
-      <link>https://araza6.github.io/posts/unitary-learning/</link>
-      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/posts/unitary-learning/</guid>
-      <description>Background If you may remember, I concluded my last post with an outlook on learning unitary matrices with qgrad. This post goes into the details of what unitary learning is and how one can implement unitary learning in qgrad.
-Unitary transformations are utterly important in quantum computing primarily because they preserve the norm of the vectors and thus keep the quantum states normalized. Quantum Machine Learning primarily intends to find a unitary transformation such that when a data vector, encoded as a quantum state, say $| \psi_{i} \rangle$, undergoes this transformation to give $U | \psi_{i} \rangle $, one can measure this state (in any particular basis depending on the problem) to evaluate the probability of an input vector belonging to a particular class in a classification task.</description>
-    </item>
-    
-    <item>
-      <title>Differentiating exponentials of Hamiltonians</title>
-      <link>https://araza6.github.io/posts/hamiltonian-differentiation/</link>
-      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/posts/hamiltonian-differentiation/</guid>
-      <description>Let me start by claiming that quantum machine learning is basically unitary learning. Take circuit learning for example. We start with an initial state, which is almost always $| 0 \rangle$, apply a bunch of gates in each layer and continue to do so based on how much is our appetite for decoherence goes. Then we knot qubits up with some entanglement and finally measure on some or all qubits with respect to an operator.</description>
-    </item>
-    
-    <item>
-      <title>Halfway through Google Summer of Code</title>
-      <link>https://araza6.github.io/posts/gsoc-halfway/</link>
-      <pubDate>Sun, 19 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/posts/gsoc-halfway/</guid>
-      <description>It is about mid-July, and I am midway through my internship with Google Summer of Code (GSoC). This post is intended to serve as a quick update on the progress of my ongoing project about autodifferentiation of functions involving quantum processes.
-In my last post, I highlighted how is it difficult to interface QuTiP with JAX. As a (temporary) solution, I highlighted towards the end of the post, that the way forward would be to make a light-weight, but JAX-compatible, QuTiP.</description>
-    </item>
-    
-    <item>
-      <title>Interfacing JAX with QuTiP</title>
-      <link>https://araza6.github.io/posts/qobj-jax-interface/</link>
-      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/posts/qobj-jax-interface/</guid>
-      <description>As the month of June comes to an end, so does the first phase of Google Summer of Code (GSoC) 2020. In my previous post, I attempted to cover the theory behind auto-differentiation, but did not fully explain how am I going to use autodiff for my GSoC project. Here, I am going to discuss just that. I will explain what problems did I face to make QuTiP work with JAX, the famed auto-differentitation library, and what route did I take to solve the problem.</description>
-    </item>
-    
-    <item>
-      <title>Introduction to Autodifferentiation in Machine Learning</title>
-      <link>https://araza6.github.io/posts/autodiff/autodiff/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/posts/autodiff/autodiff/</guid>
-      <description>Disclaimer: This blog essentially summarizes this amazing review paper: Automatic Differentiation in Machine Learning: a Survey. All the tables and (fancy) images in the blog are taken from the paper. Invested readers should check out the full paper (linked).
-Autodiff (short for Autodifferentiation) is extensively used in modern machine learning tasks. Libraries like Tensorflow, Pytorch, JAX and several others have made it easier to calculate the derivatives of arbitrary functions. In this blog, I will be going through the theory behind autodiff, explain what autodiff is NOT, and finally chain it up to machine learning (with a small code-snippet too).</description>
-    </item>
-    
-    <item>
-      <title>First Blog Post: GSoC 2020</title>
-      <link>https://araza6.github.io/posts/welcome-gsoc/</link>
-      <pubDate>Fri, 22 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://araza6.github.io/posts/welcome-gsoc/</guid>
-      <description>Hello,
-This is my first-ever blog post (as far as I remember really). I planned to start blogging in my freshman year, and it&amp;rsquo;s been almost three years since then. Planning fallacy, as Kahneman would say. Anyway, I should thank Google Summer of Code to finally make me do it (although technically so. Fret not, I will try to make these blogs as accessible as possible) as part of my upcoming summer project with NUMFOCUS&amp;rsquo;s QuTiP.</description>
-    </item>
-    
-    <item>
-      <title>About Me</title>
-      <link>https://araza6.github.io/about/</link>
+      <title>About</title>
+      <link>https://araza6.github.io/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://araza6.github.io/about/</guid>
-      <description>I am a Master&amp;rsquo;s student in physics at Freie Universität Berlin, co-supervised by Jens Eisert and Alex Bredariol Grilo. As part of my Master&amp;rsquo;s thesis, I am working on problems in quantum learning theory and Hamiltonian complexity. I completed my undergraduate degree in Computing Mathematics, with minors in physics and computer science at the City University of Hong Kong advised by Oscar Dahlsten.
-Publications Xiao-Ming Zhang, Zezhu Wei, Raza Asad, Xu-Chen Yang, Xin Wang.</description>
+      <guid>https://araza6.github.io/</guid>
+      <description>Starting Fall 2024, I will be a PhD student in Computer Science at UChicago, advised by Bill Fefferman.
+Recently, I completed my Master&amp;rsquo;s in physics at Freie Universität Berlin, co-supervised by Jens Eisert and Alex Bredariol Grilo. Before that, I obtained my undergraduate degree in Computing Mathematics, with minors in physics and computer science at the City University of Hong Kong, advised by Oscar Dahlsten.
+I like to think about questions surrounding quantum computation and complexity theory.</description>
     </item>
     
   </channel>
