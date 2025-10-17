@@ -1,3 +1,6 @@
+@import url("https://cdn.jsdelivr.net/npm/academicons/css/academicons.min.css");
+nav.social .ai { font-size: 22px; line-height: 1; vertical-align: middle; }
+
 .header .site-description {
     display: flex;
     justify-content: space-between !important;
